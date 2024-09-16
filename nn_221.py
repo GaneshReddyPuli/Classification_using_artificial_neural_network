@@ -26,8 +26,13 @@ X = np.transpose(samples)
 Y = labels.reshape((1, m))
 
 plt.figure()
-plt.scatter(X[0, :], X[1, :], c=Y, cmap=colors.ListedColormap(['blue', 'red']));
+scatter = plt.scatter(X[0, :], X[1, :], c=Y, cmap=colors.ListedColormap(['blue', 'red']));
+plt.xlabel("Feature 1")
+plt.ylabel("Feature 2")
 plt.title("Original Dataset")
+# Add a legend
+handles, labels = scatter.legend_elements(prop="colors", num=2)
+plt.legend(handles, ["Class 0 (Blue)", "Class 1 (Red)"], title="Classes")
 #print(X)
 #print(Y)
 print("Dataset:")
@@ -200,17 +205,32 @@ def predict(X, parameters):
 
     return A2, predictions
 
-X_sample_pred = np.array([[2, 8, 2, 8], [2, 8, 8, 2]])
-Y_sample_pred = predict(X_sample_pred, parameters)[1]
+# Function to calculate accuracy
+def calculate_accuracy(predictions, Y):
+
+    # Calculate the number of correct predictions
+    correct_predictions = np.sum(predictions == Y)
+    # Calculate accuracy
+    accuracy = correct_predictions / Y.size
+    return accuracy
+
+'''X_sample_pred = np.array([[2, 8, 2, 8], [2, 8, 8, 2]])
 
 print("\nSample testing:")
 print(f"Coordinates (in the columns):\n{X_sample_pred}")
-print(f"Predictions:\n{Y_sample_pred}")
+Y_sample_pred = predict(X_sample_pred, parameters)[1]
+print(f"Predictions:\n{Y_sample_pred}")'''
 
-print("\nReal testing:")
-Y_hat,real_predictions = predict(X, parameters)
+print("\nTesting:")
+Y_hat,boolean_predictions = predict(X, parameters)
+Y_hat_binary = boolean_predictions.astype(int)
+print("Model predictions:\n",Y_hat)
+print("Real predictions:\n",Y_hat_binary)
 cost = compute_cost(Y_hat, Y)
-print("Cost of our model:",cost)
+print("Cost of our model(Logistic loss):",cost)
+
+acc = calculate_accuracy(Y_hat_binary, Y)
+print("Accuracy of our model:",acc)
 
 def plot_decision_boundary(predict, parameters, X, Y):
     # Define bounds of the domain.
