@@ -12,7 +12,7 @@ from matplotlib import colors
 # A function to create a dataset.
 from sklearn.datasets import make_blobs
 
-# Set a seed so that the results are consistent.
+# Set a seed
 np.random.seed(3)
 
 m = 2000
@@ -120,7 +120,7 @@ def backward_propagation(parameters, cache, X, Y):
     A1 = cache["A1"]
     A2 = cache["A2"]
     
-    # Backward propagation: calculate partial derivatives denoted as dW1, db1, dW2, db2 for simplicity. 
+    # Backward propagation: calculate partial derivatives(dW1, db1, dW2, db2)
     dZ2 = A2 - Y
     dW2 = 1/m * np.dot(dZ2, A1.T)
     db2 = 1/m * np.sum(dZ2, axis = 1, keepdims = True)
